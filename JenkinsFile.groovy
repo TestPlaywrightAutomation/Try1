@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    environment {
+        NODEJS_HOME = tool name: 'NodeJS 16', type: 'nodejs'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Install Playwright Browsers') {
+            steps {
+                sh 'npx playwright install --with-deps'
+            }
+        }
+
+        stage('Compile TypeScript') {
+            steps {
+                sh 'npx tsc'
+            }
+        }
+
+        stage('Run Playwright Tests') {
+            steps {
+                sh 'npx playwright test'
+            }
+        }
+
+        stage('Archive HTML Report') {
+            steps {
+                archiveArtifacts artifacts: 'playwright-report/**/*', fingerprint: true
+            }
+        }
+    }
+}
