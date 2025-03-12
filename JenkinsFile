@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        NODEJS_HOME = tool name: 'NodeJS 16', type: 'nodejs'
+        NODEJS_HOME = tool name: 'Built-In Node', type: 'nodejs'
     }
 
     stages {
