@@ -42,4 +42,16 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            echo 'Pipeline completed. Cleaning up...'
+        }
+        success {
+            echo 'Playwright tests passed successfully!'
+        }
+        failure {
+            echo 'Playwright tests failed. Check the logs for details.'
+        }
+    }
 }
